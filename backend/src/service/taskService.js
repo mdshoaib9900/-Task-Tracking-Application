@@ -29,8 +29,20 @@ async function deleteTaskById(ids) {
     return await pool.query("DELETE FROM tasks WHERE id=$1",[ids]);
            
 }
+
+//to add task
+async function addTaskService(taskData) {
+    const { title, description, assigneeId, status, dueDate } = taskData;
+    return await pool.query(`INSERT INTO tasks (title, description, assigneeId, status, dueDate)
+    VALUES ($1, $2, $3, $4, $5)
+    RETURNING * `,[title,description,assigneeId,status,dueDate]
+);
+}
+
+//to update by id
 module.exports={
     getAllTasks,
     getTaskById,
-    deleteTaskById
+    deleteTaskById,
+    addTaskService
 }

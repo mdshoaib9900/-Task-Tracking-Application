@@ -1,5 +1,5 @@
 const { getAllTasks } = require("../service/taskService");
-const {getTaskById,deleteTaskById} = require("../service/taskService");
+const {getTaskById,deleteTaskById,addTaskService} = require("../service/taskService");
 
 //get all task controller
 async function getTasks(req,res) {
@@ -44,8 +44,30 @@ async function deleteById(req,res) {
     }
 }
 
+//add task
+async function addTask(req,res) {
+    try {
+        const { title, description, assigneeId, status, dueDate } = req.body;
+        const result = await addTaskService({
+        title,
+        description,
+        assigneeId,
+        status,
+        dueDate,
+        });
+      res.status(201).json({
+      message: "Task created successfully",
+      task: result.rows[0],
+    });
+    } catch (error) {
+        console.error("error adding task :", error.message);
+        res.status(500).json({ error: error.message });
+    }
+}
+
 module.exports={
     getTasks,
     getById,
-    deleteById
+    deleteById,
+    addTask
 }
