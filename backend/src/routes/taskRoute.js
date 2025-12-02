@@ -1,6 +1,6 @@
 const express=require("express");
 const {getTasks} =require("../controller/taskController");
-const {getById,deleteById,addTask} =require("../controller/taskController");
+const {getById,deleteById,addTask,updateById} =require("../controller/taskController");
 const router=express.Router();
 
 //to get tasks
@@ -11,5 +11,7 @@ router.get("/tasks/:id",getById);
 router.delete("/tasks/:id",deleteById);
 //to add task
 router.post("/tasks",addTask);
+//to update task by id
+router.put("/tasks/:id",updateById);
 
 module.exports=router;

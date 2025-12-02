@@ -40,9 +40,23 @@ async function addTaskService(taskData) {
 }
 
 //to update by id
+async function updateByIdService(taskData,id) {
+    const { title, description, assigneeId, status, dueDate } = taskData;
+    return await pool.query(`UPDATE tasks
+         SET title = $1,
+         description = $2,
+         assigneeId = $3,
+         status = $4,
+         dueDate = $5
+         WHERE id = $6
+         RETURNING * `,
+         [title, description, assigneeId, status, dueDate, id]
+        );
+}
 module.exports={
     getAllTasks,
     getTaskById,
     deleteTaskById,
-    addTaskService
+    addTaskService,
+    updateByIdService
 }
