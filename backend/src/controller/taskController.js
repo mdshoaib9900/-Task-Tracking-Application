@@ -67,11 +67,10 @@ async function addTask(req,res) {
 
 //too update by id
 async function updateById(req,res) {
-    let {id}=req.params;
-    id = Number(id);
-    
+    const { id } = req.params;
+    console.log(id);
     try { 
-        const result=await updateByIdService(req.body,id);
+        const result = await updateByIdService(req.body,id);
         if(result.rowCount===0){
             return res.status(404).json({ message: "Task not found" });
         }
